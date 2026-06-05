@@ -1,0 +1,411 @@
+/* Todo Life Dashboard — styles */
+
+/* ===== THEME VARIABLES (Default: Dark/Modern Purple) ===== */
+/* ===== THEME VARIABLES ===== */
+:root {
+  /* =======================================================
+     1. MODE DEFAULT (DARK MODE) 
+     Layar: Ungu Gelap, Kotak Widget: Putih
+     ======================================================= */
+  --bg-color: #1e1b4b;       /* Background layar ungu gelap */
+  --card-bg: #ffffff;        /* Background kotak widget putih */
+  
+  /* Warna Teks */
+  --text-main: #1a1a1a;      /* Teks utama di dalam kotak putih (Gelap) */
+  --text-muted: #4a4a4a;     /* Teks tanggal di dalam kotak putih (Abu-abu) */
+  --text-header: #1a1a1a;    /* Teks jam & greeting di dalam kotak putih (Gelap) */
+  
+  /* Warna Tombol & Input */
+  --button-bg: #f5f5f5;      /* Background tombol abu-abu sangat terang */
+  --button-text: #1a1a1a;    /* Teks di dalam tombol warna gelap */
+  --border-color: #767676;   /* Garis tepi tombol dan input terlihat jelas */
+}
+
+body.light-theme {
+  /* =======================================================
+     2. LIGHT MODE (Tema Terbalik sesuai Brief)
+     Layar: Abu-abu Terang, Kotak Widget: Ungu Cerah
+     ======================================================= */
+  --bg-color: #f5f5f5;       /* Background layar abu-abu terang */
+  --card-bg: #6366f1;        /* Background kotak widget ungu cerah */
+  
+  /* Warna Teks */
+  --text-main: #ffffff;      /* Teks utama di dalam kotak ungu jadi putih */
+  --text-muted: #e0e0e0;     /* Teks tanggal di dalam kotak ungu jadi abu terang */
+  --text-header: #ffffff;    /* Teks jam & greeting di dalam kotak ungu jadi putih */
+  
+  /* Warna Tombol & Input */
+  --button-bg: #ffffff;      /* Tombol di dalam widget menjadi putih bersih */
+  --button-text: #1a1a1a;    /* Teks di dalam tombol tetap gelap agar terbaca */
+  --border-color: #ffffff;   /* Garis tepi input menggunakan warna putih */
+  --button-bg: #ffffff;
+  --button-text: #1a1a1a;
+}
+
+/* Mobile-first base: single column */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Tablet and above: two-column grid */
+@media (min-width: 600px) {
+  .dashboard {
+    grid-template-columns: 1fr 1fr;
+  }
+  /* Hanya greeting-widget yang memenuhi baris atas penuh */
+  .greeting-widget {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Wide desktop: constrain max width */
+@media (min-width: 1280px) {
+  body {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* ===== TYPOGRAPHY & COLOUR ===== */
+
+/* Base typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  background-color: var(--bg-color); 
+  color: var(--text-main);          
+  line-height: 1.5;
+  transition: background-color 0.3s, color 0.3s; 
+}
+
+h2 {
+  font-size: 1.25rem; /* 20px at default scale — ≥ 18px per req 6.4 */
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+}
+
+/* Widget sections */
+.greeting-widget,
+.focus-timer,
+.todo-list,
+.quick-links {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.greeting-widget {
+  text-align: center;
+}
+
+/* Greeting */
+#greeting-message {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-header);;
+}
+
+#greeting-time {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-header);
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+#greeting-date {
+  font-size: 1rem;
+  color: var(--text-muted); /* contrast ~7.5:1 against white — passes AA */
+}
+
+/* Timer display */
+#timer-display {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+/* Timer controls */
+.timer-controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+/* Timer notification */
+#timer-notification {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #d4edda;
+  color: #155724; /* contrast ~9.4:1 against #d4edda — passes AA */
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Buttons */
+button {
+  font-size: 1rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border-color); /* Garis tepi adaptif */
+  border-radius: 4px;
+  background-color: var(--button-bg);    /* Background tombol adaptif */
+  color: var(--button-text);             /* Warna teks tombol adaptif */
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+  background-color: #e8e8e8;
+}
+
+/* Forms */
+input[type="text"] {
+  font-size: 1rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border-color); /* Garis tepi input adaptif */
+  border-radius: 4px;
+  color: #1a1a1a;                        /* Teks ketikan input tetap hitam */
+  background-color: #ffffff;             /* Background dalam input tetap putih */
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+/* Validation error */
+.validation-error {
+  display: block;
+  color: #b00020; /* contrast ~7.4:1 against white — passes AA */
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Hidden utility */
+[hidden] {
+  display: none !important;
+}
+
+/* Completed task strikethrough */
+.task-completed {
+  text-decoration: line-through !important;
+  color: #767676 !important; /* Warna abu-abu pudar menandakan tugas selesai */
+  opacity: 0.6;
+}
+
+/* Todo list items */
+#todo-items {
+  list-style: none;
+  margin-top: 0.75rem;
+}
+
+#todo-items li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Menendang tombol-tombol ke arah kanan */
+  gap: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: rgba(0, 0, 0, 0.02); /* Memberi warna latar tipis pada baris */
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+}
+
+/* Membuat grup tombol di dalam list tetap menempel erat di kanan */
+#todo-items li button {
+  margin-left: 0.25rem;
+}
+
+/* Quick links items */
+#links-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+/* Membuat Form Tasks sejajar ke samping */
+#todo-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#todo-form input[type="text"] {
+  margin-bottom: 0; /* Menghapus margin bawah bawaan agar sejajar */
+  flex: 1;          /* Membuat kolom input memenuhi ruang yang ada */
+}
+
+/* Membuat Form Quick Links sejajar ke samping */
+#links-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#links-form input[type="text"] {
+  margin-bottom: 0; /* Menghapus margin bawah bawaan agar sejajar */
+  flex: 1;
+}
+
+/* Mewarnai teks kegiatan di To-Do List */
+#todo-items li span {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Gaya khusus untuk item Quick Links yang sudah jadi */
+#links-items div {
+  background-color: #4f46e5; /* Warna biru/ungu solid untuk tombol link */
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;       /* Membuat bentuknya melengkung kapsul seperti di brief */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Mengubah warna teks tombol link di dalam kapsul */
+#links-items div button[data-action="open"] {
+  background: none !important;
+  border: none !important;
+  color: #ffffff !important; /* Teks nama website menjadi putih */
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.2rem 0.4rem;
+}
+
+/* Mengubah tampilan tombol hapus (x) di dalam kapsul Quick Links */
+#links-items div button[data-action="delete-link"] {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: none !important;
+  color: #ffffff !important;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+#links-items div button[data-action="delete-link"]:hover {
+  background: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Tombol Add (Tasks & Quick Links) dan Tombol Start Timer */
+#todo-form button[type="submit"],
+#links-form button[type="submit"],
+#timer-start {
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+  border: 1px solid #4f46e5 !important;
+  font-weight: 600;
+}
+
+/* Tombol Dark/Light Mode agar lebih serasi */
+#theme-toggle {
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+  border: 1px solid #4f46e5 !important;
+}
+
+/* Efek hover ketika kursor mendekati tombol utama */
+#todo-form button[type="submit"]:hover,
+#links-form button[type="submit"]:hover,
+#timer-start:hover,
+#theme-toggle:hover {
+  background-color: #4338ca !important;
+}
+
+/* Merapikan posisi checkbox dan teks kegiatan */
+#todo-items li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+}
+
+/* Memaksa teks judul tugas memenuhi ruang tengah, sehingga tombol Edit & Delete terdorong ke kanan */
+#todo-items li span {
+  flex: 1; 
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Mengatur ukuran checkbox agar pas dan proporsional */
+#todo-items li input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 0.25rem;
+}
+
+/* Tombol EDIT (Warna Biru/Khaki) */
+#todo-items li button[data-action="edit"] {
+  background-color: #3b82f6 !important; /* Biru */
+  color: #ffffff !important;
+  border: 1px solid #3b82f6 !important;
+  font-weight: 500;
+}
+#todo-items li button[data-action="edit"]:hover {
+  background-color: #2563eb !important;
+}
+
+/* Tombol DELETE (Warna Merah) */
+#todo-items li button[data-action="delete"] {
+  background-color: #ef4444 !important; /* Merah */
+  color: #ffffff !important;
+  border: 1px solid #ef4444 !important;
+  font-weight: 500;
+}
+#todo-items li button[data-action="delete"]:hover {
+  background-color: #dc2626 !important;
+}
+
+/* Tombol Stop */
+#timer-stop {
+  background-color: #6b7280 !important; 
+  color: #ffffff !important;
+  border: 1px solid #6b7280 !important;
+  font-weight: 600;
+}
+#timer-stop:not(:disabled):hover {
+  background-color: #6b7280 !important;
+}
+
+/* Tombol Reset */
+#timer-reset {
+  background-color: #6b7280 !important; /* Abu-abu solid */
+  color: #ffffff !important;
+  border: 1px solid #6b7280 !important;
+  font-weight: 600;
+}
+#timer-reset:hover {
+  background-color: #4b5563 !important;
+}
+

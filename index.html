@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo Life Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="theme-toggle-container" style="text-align: right; padding: 10px 20px;">
+    <button id="theme-toggle">🌙 Dark Mode</button>
+  </div>
+
+  <main class="dashboard">
+    <!-- Greeting Widget -->
+    <section id="greeting" class="greeting-widget">
+      <p id="greeting-message" aria-live="polite">
+        <span id="greeting-text"></span>, 
+        <span id="user-name" style="border-bottom: 2px dashed currentColor; cursor: pointer;" title="Click to change name">Set Name</span>
+      </p>
+      <p id="greeting-time" aria-live="polite"></p>
+      <p id="greeting-date"></p>
+    </section>
+
+    <!-- Focus Timer -->
+    <section id="timer" class="focus-timer">
+      <h2>Focus Timer</h2>
+      <p id="timer-display" aria-live="polite">25:00</p>
+      <div class="timer-controls">
+        <button id="timer-start">Start</button>
+        <button id="timer-stop" disabled>Stop</button>
+        <button id="timer-reset">Reset</button>
+      </div>
+      <div id="timer-notification" role="alert" hidden></div>
+    </section>
+
+    <!-- Todo List -->
+    <section id="todo" class="todo-list">
+      <h2>Tasks</h2>
+      <form id="todo-form">
+        <input id="todo-input" type="text" placeholder="Add a task…" maxlength="255">
+        <button type="submit">Add</button>
+        <span id="todo-validation" class="validation-error" role="alert"></span>
+      </form>
+      <ul id="todo-items"></ul>
+    </section>
+
+    <!-- Quick Links -->
+    <section id="links" class="quick-links">
+      <h2>Quick Links</h2>
+      <form id="links-form">
+        <input id="links-label" type="text" placeholder="Label">
+        <input id="links-url" type="text" placeholder="https://…">
+        <button type="submit">Add</button>
+        <span id="links-validation" class="validation-error" role="alert"></span>
+      </form>
+      <div id="links-items"></div>
+    </section>
+  </main>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
